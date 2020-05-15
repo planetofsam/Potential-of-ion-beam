@@ -1,3 +1,4 @@
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/planetofsam/Potential-of-ion-beam/tree/master/master)
 # Potential-of-ion-beam
 Calculates potential of ion beam.
 
