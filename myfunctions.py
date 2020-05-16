@@ -7,7 +7,7 @@ e_charge=uni.e
 amu_inkg=uni.m_u
 
 
-def potential(Energy_eV,Mass_amu,current_uA,BeamDiameter_mm,TubeDiameter_mm):
+def BeamPotential(Energy_eV,Mass_amu,current_uA,BeamDiameter_mm,TubeDiameter_mm):
 
 
     Mass=Mass_amu*amu_inkg #Converted to Kg
@@ -21,9 +21,9 @@ def potential(Energy_eV,Mass_amu,current_uA,BeamDiameter_mm,TubeDiameter_mm):
     Velocity=np.sqrt(2*Energy/Mass)
     rtest=TubeDiameter #in Meters
     r_vec=np.linspace(-rtest,rtest,num=1000)
-    potential.rvec=r_vec
+    BeamPotential.rvec=r_vec
     r_len=r_vec.size
-    print(r_len)
+    #print(r_len)
     V_vec=np.zeros((r_len))
     lgterm=np.log(BeamDiameter/rtest)
     for i in range(r_len):
@@ -34,3 +34,28 @@ def potential(Energy_eV,Mass_amu,current_uA,BeamDiameter_mm,TubeDiameter_mm):
 
 
     return np.abs(V_vec),r_vec*1000
+
+
+def BeamProfile(Energy,Mass,Current,Bd,Td):
+#     import numpy as np
+    import matplotlib.pyplot as plt
+#     import myfunctions as mf
+#    Current=Current # in micro Amps
+#    BeamDiameter=Bd# in mm
+#    Energy=Energy # in eV
+#    Mass=Mass # in amu
+#    TubeDiameter=Td # in mm Enter radius here, whole number
+    plt.close('all')
+    plt.figure(1)
+    v,r=BeamPotential(Energy,Mass,Current,Bd,Td)
+    plt.plot(r,v,label='Space Potential')
+    plt.legend()
+    plt.xlabel('r (distance from beam center, mm)',FontSize=14)
+    plt.ylabel('Voltage (v)',FontSize=14)
+    plt.title('Potential distribution for various Beam Diameters')
+
+    plt.axvline(Bd,ymax=0.75,linestyle='--',label='Beam Diameter')
+    plt.axvline(-Bd,ymax=0.75,linestyle='--')
+    plt.legend()
+    plt.ioff()
+    plt.show(block=False)
